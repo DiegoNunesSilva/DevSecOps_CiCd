@@ -1,13 +1,22 @@
-name: Pipeline com ls
+name: Pipeline com vários comandos
 
 on: [push]
 
 jobs:
-  listar-arquivos:
+  comandos-simples:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout código
         uses: actions/checkout@v3
 
-      - name: Listar arquivos do repositório
+      - name: Mostrar mensagem
+        run: echo "Rodando comandos simples no CI/CD!"
+
+      - name: Listar arquivos
         run: ls -la
+
+      - name: Mostrar diretório atual
+        run: pwd
+
+      - name: Mostrar conteúdo do README
+        run: cat README.md
