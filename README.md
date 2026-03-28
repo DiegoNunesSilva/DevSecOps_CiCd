@@ -1,5 +1,7 @@
 # DevSecOps_CiCd
 
+![CI](https://github.com/DiegoNunesSilva/DevSecOps_CiCd/actions/workflows/ci.yml/badge.svg)
+
 Este repositório contém exemplos de pipelines de CI/CD usando GitHub Actions.
 
 ## 🚀 Objetivo
