@@ -1,29 +1,38 @@
-name: CI com Pytest
+name: CI com Pytest e SonarCloud
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout do código
-      uses: actions/checkout@v4
-
-    - name: Instalar Python
-      uses: actions/setup-python@v5
+      uses: actions/checkout@v3
       with:
-        python-version: '3.11'
+        fetch-depth: 0  # necessário para SonarCloud
+
+    - name: Configurar Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
 
     - name: Instalar dependências
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Rodar testes com pytest
-      run: |
-        pytest
+    - name: Rodar Pytest
+      run: pytest
+
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v2
+      with:
+        projectBaseDir: .
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_SCANNER_OPTS: "-Dsonar.projectKey=DiegoNunesSilva_DevSecOps_CiCd -Dsonar.organization=diegonunessilva"
